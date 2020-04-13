@@ -10,15 +10,19 @@ class Js8(object):
         parsed_msg = Js8Message(msg)
 
         bits = parsed_msg.bits
-        if bits[0] and bits[1]:
-            return Js8FrameDataCompressed(parsed_msg)
-        elif bits[0] and not bits[1]:
-            return Js8FrameData(parsed_msg)
-        elif not bits[0] and not bits[1] and not bits[2]:
-            logger.debug("FrameHeartbeat")
-        elif not bits[0] and not bits[1] and bits[2]:
-            logger.debug("FrameCompound")
-        elif not bits[0] and bits[1] and not bits[2]:
-            logger.debug("FrameCompoundDirected")
-        elif not bits[0] and bits[1] and bits[2]:
-            return Js8FrameDirected(parsed_msg)
+        if bits[0]:
+            if bits[1]:
+                return Js8FrameDataCompressed(parsed_msg)
+            else:
+                return Js8FrameData(parsed_msg)
+        else:
+            if bits[1]:
+                if bits[2]:
+                    return Js8FrameDirected(parsed_msg)
+                else:
+                    logger.debug("FrameCompoundDirected")
+            else:
+                if bits[2]:
+                    logger.debug("FrameCompound")
+                else:
+                    logger.debug("FrameHeartbeat")
