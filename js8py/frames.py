@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from .message import Js8Message
 from .jsc import Jsc
 from .huffman import HuffmanDecoder
-from .constants import alphanumeric, directed_cmds, snr_cmds, basecalls
+from .constants import alphanumeric, directed_cmds, snr_cmds, basecalls, nbasegrid, cqs, hbs
 
 import logging
 
@@ -110,22 +110,120 @@ class Js8FrameDirected(Js8Frame):
 
     def __str__(self):
         result = "{0}: {1} {2}".format(self.callsign_from, self.callsign_to, self.cmd)
-        if self.snr:
+        if self.snr is not None:
             result += " {0:0=+3}".format(self.snr)
         return result
 
 
-class Js8FrameHeartbeat(Js8Frame):
+class Js8FrameCompound(Js8Frame):
     def __init__(self, msg: Js8Message):
         super().__init__(msg)
+        packed_callsign = self.bitsToInt(msg.bits[3:53])
+        self.callsign = self._unpackAlphanumeric50(packed_callsign)
 
-    def __str__(self):
-        return "TODO: Hearbeat frame"
+    def _unpackAlphanumeric50(self, packed):
+        word = [""] * 11
 
+        tmp = packed % 38
+        word[10] = alphanumeric[tmp]
+        packed = int(packed / 38)
 
-class Js8FrameCompound(Js8Frame):
+        tmp = packed % 38
+        word[9] = alphanumeric[tmp]
+        packed = int(packed / 38)
+
+        tmp = packed % 38
+        word[8] = alphanumeric[tmp]
+        packed = int(packed / 38)
+
+        tmp = packed % 2
+        word[7] = "/" if tmp else " "
+        packed = int(packed / 2)
+
+        tmp = packed % 38
+        word[6] = alphanumeric[tmp]
+        packed = int(packed / 38)
+
+        tmp = packed % 38
+        word[5] = alphanumeric[tmp]
+        packed = int(packed / 38)
+
+        tmp = packed % 38
+        word[4] = alphanumeric[tmp]
+        packed = int(packed / 38)
+
+        tmp = packed % 2
+        word[3] = "/" if tmp else " "
+        packed = int(packed / 2)
+
+        tmp = packed % 38
+        word[2] = alphanumeric[tmp]
+        packed = int(packed / 38)
+
+        tmp = packed % 38
+        word[1] = alphanumeric[tmp]
+        packed = int(packed / 38)
+
+        tmp = packed % 39
+        word[0] = alphanumeric[tmp]
+        # packed = int(packed / 39)
+
+        return "".join(word).replace(" ", "")
+
     def __str__(self):
         return "TODO: Compound frame"
+
+
+class Js8FrameHeartbeat(Js8FrameCompound):
+    def __init__(self, msg: Js8Message):
+        super().__init__(msg)
+        self.grid = self.unpackGrid(self.bitsToInt(msg.bits[54:69]))
+        message_type = self.bitsToInt(msg.bits[69:72])
+        messages = cqs if msg.bits[53] else hbs
+        self.message = messages[message_type]
+
+
+    def unpackGrid(self, value):
+        if value > nbasegrid:
+            return ""
+
+        dlat = value % 180 - 90
+        dlong = value / 180 * 2 - 180
+
+        return self.deg2grid(dlong, dlat)[:4]
+
+    def deg2grid(self, dlong, dlat):
+        grid = bytearray(6)
+
+        if dlong < -180:
+            dlong += 360
+        if dlong > 180:
+            dlong -= 360
+
+        nlong = int(60.0*(180.0-dlong)/5)
+
+        n1 = int(nlong/240)
+        n2 = int((nlong-240*n1)/24)
+        n3 = int(nlong-240*n1-24*n2)
+
+        grid[0] = ord('A') + n1
+        grid[2] = ord('0') + n2
+        grid[4] = ord('a') + n3
+
+        nlat = int(60.0*(dlat+90)/2.5)
+
+        n1 = int(nlat/240)
+        n2 = int((nlat-240*n1)/24)
+        n3 = int(nlat-240*n1-24*n2)
+
+        grid[1] = ord('A') + n1
+        grid[3] = ord('0') + n2
+        grid[5] = ord('a') + n3
+
+        return grid.decode("ascii")
+
+    def __str__(self):
+        return "{0}: {1} {2}".format(self.callsign, self.message, self.grid)
 
 
 class Js8FrameCompoundDirected(Js8Frame):

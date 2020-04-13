@@ -101,3 +101,27 @@ basecalls = {
     "@RADAR":     nbasecall + 42,  # RADAR GROUP
     "@SKYWARN":   nbasecall + 43,  # SKYWARN GROUP
 }
+
+nbasegrid = 180 * 180
+
+cqs = {
+    0: "CQ CQ CQ",
+    1: "CQ DX",
+    2: "CQ QRP",
+    3: "CQ CONTEST",
+    4: "CQ FIELD",
+    5: "CQ FD",
+    6: "CQ CQ",
+    7: "CQ",
+}
+
+hbs = {
+    0: "HB",                  # HB
+    1: "HB AUTO",             # HB AUTO
+    2: "HB AUTO RELAY",       # HB AUTO RELAY
+    3: "HB AUTO RELAY SPOT",  # HB AUTO RELAY SPOT
+    7: "HB AUTO SPOT",        # HB AUTO       SPOT
+    4: "HB RELAY",            # HB      RELAY
+    5: "HB RELAY SPOT",       # HB      RELAY SPOT
+    6: "HB SPOT",             # HB            SPOT
+}
