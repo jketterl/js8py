@@ -1,5 +1,6 @@
 from .frames import Js8Frame, Js8FrameDataCompressed, Js8FrameData, Js8FrameDirected
 from .message import Js8Message
+from .constants import alphabet72
 
 import logging
 

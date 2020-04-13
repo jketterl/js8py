@@ -1,6 +1,5 @@
 from datetime import datetime, timezone
 
-alphabet72 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-+/?."
 
 
 class Js8Message(object):
