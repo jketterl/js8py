@@ -1,5 +1,5 @@
 from datetime import datetime, timezone
-
+from .constants import alphabet72
 
 
 class Js8Message(object):
