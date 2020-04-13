@@ -1,4 +1,4 @@
-from .frames import Js8Frame, Js8FrameDataCompressed, Js8FrameData, Js8FrameDirected
+from .frames import Js8Frame, Js8FrameDataCompressed, Js8FrameData, Js8FrameDirected, Js8FrameHeartbeat, Js8FrameCompound, Js8FrameCompoundDirected
 from .message import Js8Message
 
 import logging
@@ -20,9 +20,9 @@ class Js8(object):
                 if bits[2]:
                     return Js8FrameDirected(parsed_msg)
                 else:
-                    logger.debug("FrameCompoundDirected")
+                    return Js8FrameCompoundDirected(parsed_msg)
             else:
                 if bits[2]:
-                    logger.debug("FrameCompound")
+                    return Js8FrameCompound(parsed_msg)
                 else:
-                    logger.debug("FrameHeartbeat")
+                    return Js8FrameHeartbeat(parsed_msg)

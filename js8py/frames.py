@@ -113,3 +113,21 @@ class Js8FrameDirected(Js8Frame):
         if self.snr:
             result += " {0:0=+3}".format(self.snr)
         return result
+
+
+class Js8FrameHeartbeat(Js8Frame):
+    def __init__(self, msg: Js8Message):
+        super().__init__(msg)
+
+    def __str__(self):
+        return "TODO: Hearbeat frame"
+
+
+class Js8FrameCompound(Js8Frame):
+    def __str__(self):
+        return "TODO: Compound frame"
+
+
+class Js8FrameCompoundDirected(Js8Frame):
+    def __str__(self):
+        return "TODO: Compound directed frame"
