@@ -11,6 +11,7 @@ setup(
     name="js8py",
     version=str(strictversion),
     packages=find_namespace_packages(include=["js8py"]),
+    package_data={"js8py": ["*.pickle"]},
     # use the github page for now
     url="https://github.com/jketterl/js8py",
     author="Jakob Ketterl",

@@ -1,23 +1,12 @@
-import re
-
-def readJscMap():
-    line_regex = re.compile("""\\s*{"([^"]+)".*, [0-9]+, [0-9]+},\\s*""")
-
-    def parseLine(line):
-        matches = line_regex.match(line)
-        if matches:
-            return matches[1]
-
-    with open("/home/jakob/workspace/js8call/jsc_map.cpp") as f:
-        map = [parseLine(line) for line in f]
-
-    return [line for line in map if line is not None]
+import pickle
+import pkg_resources
 
 
 class Jsc(object):
     size = 262144
 
-    map = readJscMap()
+    with pkg_resources.resource_stream("js8py", "jsc_map.pickle") as f:
+        map = pickle.load(f)
 
     def decompress(self, bitvec):
         b = 4
