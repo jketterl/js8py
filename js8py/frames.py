@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from .message import Js8Message
 from .jsc import Jsc
 from .huffman import HuffmanDecoder
-from .constants import alphanumeric, directed_cmds, snr_cmds, basecalls, nbasegrid, cqs, hbs
+from .constants import alphanumeric, directed_cmds, snr_cmds, basecalls, nbasegrid, cqs, hbs, nusergrid, nmaxgrid
 
 import logging
 
@@ -115,7 +115,7 @@ class Js8FrameDirected(Js8Frame):
         return result
 
 
-class Js8FrameCompound(Js8Frame):
+class _Js8CompoundBase(Js8Frame):
     def __init__(self, msg: Js8Message):
         super().__init__(msg)
         packed_callsign = self.bitsToInt(msg.bits[3:53])
@@ -170,19 +170,6 @@ class Js8FrameCompound(Js8Frame):
 
         return "".join(word).replace(" ", "")
 
-    def __str__(self):
-        return "TODO: Compound frame"
-
-
-class Js8FrameHeartbeat(Js8FrameCompound):
-    def __init__(self, msg: Js8Message):
-        super().__init__(msg)
-        self.grid = self.unpackGrid(self.bitsToInt(msg.bits[54:69]))
-        message_type = self.bitsToInt(msg.bits[69:72])
-        messages = cqs if msg.bits[53] else hbs
-        self.message = messages[message_type]
-
-
     def unpackGrid(self, value):
         if value > nbasegrid:
             return ""
@@ -221,6 +208,41 @@ class Js8FrameHeartbeat(Js8FrameCompound):
         grid[5] = ord('a') + n3
 
         return grid.decode("ascii")
+
+
+class Js8FrameCompound(_Js8CompoundBase):
+    def __init__(self, msg: Js8Message):
+        super().__init__(msg)
+        extra = self.bitsToInt(msg.bits[53:69])
+        self.grid = None
+        self.snr = None
+        self.cmd = None
+        if extra < nbasegrid:
+            self.grid = self.unpackGrid(extra)
+        elif nusergrid <= extra < nmaxgrid:
+            cmd = extra - nusergrid
+            if cmd & (1 << 7):
+                #SNR
+                self.cmd = "ACK" if cmd & (1 << 6) else "SNR"
+                num = extra & ((1 << 6) - 1)
+                self.snr = num - 31
+
+    def __str__(self):
+        res = "{0}:".format(self.callsign)
+        if self.grid:
+            res += " {0}".format(self.grid)
+        elif self.cmd and self.snr:
+            res += " {0} {1}".format(self.cmd, self.snr)
+        return res
+
+
+class Js8FrameHeartbeat(_Js8CompoundBase):
+    def __init__(self, msg: Js8Message):
+        super().__init__(msg)
+        self.grid = self.unpackGrid(self.bitsToInt(msg.bits[54:69]))
+        message_type = self.bitsToInt(msg.bits[69:72])
+        messages = cqs if msg.bits[53] else hbs
+        self.message = messages[message_type]
 
     def __str__(self):
         return "{0}: {1} {2}".format(self.callsign, self.message, self.grid)

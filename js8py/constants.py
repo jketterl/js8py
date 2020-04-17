@@ -103,6 +103,8 @@ basecalls = {
 }
 
 nbasegrid = 180 * 180
+nusergrid = nbasegrid + 10
+nmaxgrid = (1 << 15)-1
 
 cqs = {
     0: "CQ CQ CQ",

@@ -39,10 +39,9 @@ class Js8Test(TestCase):
             self.assertIsInstance(msg, Js8FrameHeartbeat)
             self.assertEqual(str(msg), expected)
 
-    @skip("implementation pending")
     def testFrameCompound(self):
         test_data = [
-            ("063545 -10 -0.2 1164 A  BYh0otuHOS3G         1", "TODO")
+            ("063545 -10 -0.2 1164 A  BYh0otuHOS3G         1", "SP5GSM: KO02")
         ]
 
         for raw_msg, expected in test_data:
