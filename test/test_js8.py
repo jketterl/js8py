@@ -40,6 +40,7 @@ class Js8Test(TestCase):
             self.assertEqual(str(msg), expected)
 
     def testFrameCompound(self):
+        # TODO: get verified samples
         test_data = [
             ("063545 -10 -0.2 1164 A  BYh0otuHOS3G         1", "SP5GSM: KO02")
         ]
@@ -51,6 +52,7 @@ class Js8Test(TestCase):
 
     @skip("implementation pending")
     def testFrameCompoundDirected(self):
+        # TODO: get verified samples
         test_data = [
             ("063600 -10 -0.2 1163 A  JvLo5KJ5k+Le         2", "TODO")
         ]

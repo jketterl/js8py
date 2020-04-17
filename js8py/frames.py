@@ -248,6 +248,11 @@ class Js8FrameHeartbeat(_Js8CompoundBase):
         return "{0}: {1} {2}".format(self.callsign, self.message, self.grid)
 
 
-class Js8FrameCompoundDirected(Js8Frame):
+class Js8FrameCompoundDirected(Js8FrameCompound):
     def __str__(self):
-        return "TODO: Compound directed frame"
+        res = "{0}".format(self.callsign)
+        if self.grid:
+            res += " {0}".format(self.grid)
+        elif self.cmd and self.snr:
+            res += " {0} {1}".format(self.cmd, self.snr)
+        return res
