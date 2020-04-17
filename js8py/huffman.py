@@ -50,7 +50,9 @@ hufftable = {
 
 class HuffmanDecoder(object):
     def decode(self, payload):
-        rem = [str(bit) for bit in payload]
+        last_zero = len(payload) - payload[::-1].index(0) -1
+        bits = payload[:last_zero]
+        rem = [str(bit) for bit in bits]
         out = ""
         while len(rem) > 2:
             found = False
