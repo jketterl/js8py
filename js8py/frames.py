@@ -217,13 +217,13 @@ class Js8FrameCompound(_Js8CompoundBase):
         self.grid = None
         self.snr = None
         self.cmd = None
-        if extra < nbasegrid:
+        if extra <= nbasegrid:
             self.grid = self.unpackGrid(extra)
         elif nusergrid <= extra < nmaxgrid:
-            cmd = extra - nusergrid
-            if cmd & (1 << 7):
+            extra = extra - nusergrid
+            if extra & (1 << 7):
                 #SNR
-                self.cmd = "ACK" if cmd & (1 << 6) else "SNR"
+                self.cmd = "ACK" if extra & (1 << 6) else "SNR"
                 num = extra & ((1 << 6) - 1)
                 self.snr = num - 31
 
@@ -232,7 +232,7 @@ class Js8FrameCompound(_Js8CompoundBase):
         if self.grid:
             res += " {0}".format(self.grid)
         elif self.cmd and self.snr:
-            res += " {0} {1}".format(self.cmd, self.snr)
+            res += " {0} {1:0=+3}".format(self.cmd, self.snr)
         return res
 
 
@@ -254,5 +254,5 @@ class Js8FrameCompoundDirected(Js8FrameCompound):
         if self.grid:
             res += " {0}".format(self.grid)
         elif self.cmd and self.snr:
-            res += " {0} {1}".format(self.cmd, self.snr)
+            res += " {0} {1:0=+3}".format(self.cmd, self.snr)
         return res
