@@ -2,42 +2,42 @@ alphanumeric = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ /@"  # callsign and grid al
 alphabet72 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-+/?."
 
 directed_cmds = {
-    "HB":           -1,  # this is my heartbeat (unused except for faux processing of HBs as directed commands)
-    "SNR?":          0,  # query snr
+    " HB":           -1,  # this is my heartbeat (unused except for faux processing of HBs as directed commands)
+    " SNR?":          0,  # query snr
     "?":             0,  # compat
-    "DIT DIT":       1,  # unused
-    "NACK":          2,  # negative acknowledge
-    "HEARING?":      3,  # query station calls heard
-    "GRID?":         4,  # query grid
+    " DIT DIT":       1,  # unused
+    " NACK":          2,  # negative acknowledge
+    " HEARING?":      3,  # query station calls heard
+    " GRID?":         4,  # query grid
     ">":             5,  # relay message
-    "STATUS?":       6,  # query idle message
-    "STATUS":        7,  # this is my status
-    "HEARING":       8,  # these are the stations i'm hearing
-    "MSG":           9,  # this is a complete message
-    "MSG TO:":      10,  # store message at a station
-    "QUERY":        11,  # generic query
-    "QUERY MSGS":   12,  # do you have any stored messages?
-    "QUERY MSGS?":  12,  # do you have any stored messages?
-    "QUERY CALL":   13,  # can you transmit a ping to callsign?
+    " STATUS?":       6,  # query idle message
+    " STATUS":        7,  # this is my status
+    " HEARING":       8,  # these are the stations i'm hearing
+    " MSG":           9,  # this is a complete message
+    " MSG TO:":      10,  # store message at a station
+    " QUERY":        11,  # generic query
+    " QUERY MSGS":   12,  # do you have any stored messages?
+    " QUERY MSGS?":  12,  # do you have any stored messages?
+    " QUERY CALL":   13,  # can you transmit a ping to callsign?
     # " ":          14,  # reserved
-    "GRID":         15,  # this is my current grid locator
-    "INFO?":        16,  # what is your info message?
-    "INFO":         17,  # this is my info message
-    "FB":           18,  # fine business
-    "HW CPY?":      19,  # how do you copy?
-    "SK":           20,  # end of contact
-    "RR":           21,  # roger roger
-    "QSL?":         22,  # do you copy?
-    "QSL":          23,  # i copy
-    "CMD":          24,  # command
-    "SNR":          25,  # seen a station at the provided snr
-    "NO":           26,  # negative confirm
-    "YES":          27,  # confirm
-    "73":           28,  # best regards, end of contact
-    "ACK":          29,  # acknowledge
-    "AGN?":         30,  # repeat message
-    " ":            31,  # send freetext (weird artifact)
-    "":             31,  # send freetext
+    " GRID":         15,  # this is my current grid locator
+    " INFO?":        16,  # what is your info message?
+    " INFO":         17,  # this is my info message
+    " FB":           18,  # fine business
+    " HW CPY?":      19,  # how do you copy?
+    " SK":           20,  # end of contact
+    " RR":           21,  # roger roger
+    " QSL?":         22,  # do you copy?
+    " QSL":          23,  # i copy
+    " CMD":          24,  # command
+    " SNR":          25,  # seen a station at the provided snr
+    " NO":           26,  # negative confirm
+    " YES":          27,  # confirm
+    " 73":           28,  # best regards, end of contact
+    " ACK":          29,  # acknowledge
+    " AGN?":         30,  # repeat message
+    "  ":            31,  # send freetext (weird artifact)
+    " ":             31,  # send freetext
 }
 
 snr_cmds = [25, 29]
