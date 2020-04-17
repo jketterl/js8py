@@ -229,10 +229,6 @@ class Js8FrameCompound(_Js8CompoundBase):
 
     def __str__(self):
         res = "{0}:".format(self.callsign)
-        if self.grid:
-            res += " {0}".format(self.grid)
-        elif self.cmd and self.snr:
-            res += " {0} {1:0=+3}".format(self.cmd, self.snr)
         return res
 
 

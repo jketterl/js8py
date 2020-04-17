@@ -54,7 +54,8 @@ class Js8Test(TestCase):
     def testFrameCompound(self):
         # TODO: get verified samples
         test_data = [
-            ("063545 -10 -0.2 1164 A  BYh0otuHOS3G         1", "SP5GSM: KO02"),
+            ("063545 -10 -0.2 1164 A  BYh0otuHOS3G         1", "SP5GSM:"),
+            ("211315 -15  0.6 1250 A  B8giaUqYuUtG         1", "PE75OUW:"),
         ]
 
         for raw_msg, expected in test_data:
