@@ -12,7 +12,7 @@ class Js8Message(object):
         self.freq = int(raw_message[16:20])
         self.mode = raw_message[21]
         self.payload = raw_message[24:45].strip()
-        self.something = raw_message[45]
+        self.thread_type = raw_message[45]
         self.bits = self._toBits()
 
     def _parse_timestamp(self, instring):

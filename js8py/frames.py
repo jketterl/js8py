@@ -16,12 +16,19 @@ class Js8Frame(ABC):
         self.dt = msg.dt
         self.freq = msg.freq
         self.mode = msg.mode
+        self.thread_type = msg.thread_type
 
     def bitsToInt(self, bits):
         ret = 0
         for bit in bits:
             ret = ret << 1 | bit
         return ret
+
+    def isFirstMessage(self):
+        return self.thread_type & 1 > 0
+
+    def isLastMessage(self):
+        return self.thread_type & 2 > 0
 
     @abstractmethod
     def __str__(self):
