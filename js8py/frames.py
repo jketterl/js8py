@@ -61,7 +61,7 @@ class Js8FrameDirected(Js8Frame):
         cmd = self.bitsToInt(msg.bits[59:64])
         self.cmd = [c for c, v in directed_cmds.items() if v == cmd % 32][0]
 
-        extra = self.bitsToInt(msg.bits[64:72])
+        extra = self.bitsToInt(msg.bits[66:72])
 
         self.snr = None
         if extra:
