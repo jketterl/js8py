@@ -4,5 +4,6 @@ Files: LICENSE
 Copyright: 2007, Free Software Foundation, Inc. <https://fsf.org/>
 License: GPL-3+
 
+Files: *
 License: GPL-3
 Comment: Add the corresponding license text here
