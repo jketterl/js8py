@@ -116,9 +116,9 @@ class Js8FrameDirected(Js8Frame):
         return callsign
 
     def __str__(self):
-        result = "{0}: {1}{2}".format(self.callsign_from, self.callsign_to, self.cmd)
+        result = "{0}: {1}{2} ".format(self.callsign_from, self.callsign_to, self.cmd)
         if self.snr is not None:
-            result += " {0:0=+3}".format(self.snr)
+            result += "{0:0=+3} ".format(self.snr)
         return result
 
 
