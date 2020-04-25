@@ -27,11 +27,11 @@ class Js8Test(TestCase):
 
     def testFrameDirected(self):
         test_data = [
-            ("151615 -11  0.3 2457 A  ViZoThL+C+aL         3", "G0CQZ: DF4MJ SNR -10"),
-            ("161630 -19  0.3 1203 A  QrqjshWc6lq0         3", "DG3EK: DM5CQ ACK"),
-            ("165430 -14  2.5 1697 A  Tuj1fVGGPoy0         1", "RV4CQ: @APRSIS GRID"),
-            ("201915 -13  0.3  794 A  R43a8hMPfZqV         3", "EI2GYB: DF7FR ACK +00"),
-            ("183445 -24  0.3 1520 A  VkrOrOOSTgK0         1", "M0SUY: SV1GGY>")
+            ("151615 -11  0.3 2457 A  ViZoThL+C+aL         3", "G0CQZ: DF4MJ SNR -10 "),
+            ("161630 -19  0.3 1203 A  QrqjshWc6lq0         3", "DG3EK: DM5CQ ACK "),
+            ("165430 -14  2.5 1697 A  Tuj1fVGGPoy0         1", "RV4CQ: @APRSIS GRID "),
+            ("201915 -13  0.3  794 A  R43a8hMPfZqV         3", "EI2GYB: DF7FR ACK +00 "),
+            ("183445 -24  0.3 1520 A  VkrOrOOSTgK0         1", "M0SUY: SV1GGY> ")
         ]
 
         for raw_msg, expected in test_data:
