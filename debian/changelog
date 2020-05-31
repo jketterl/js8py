@@ -1,5 +1,5 @@
-js8py (0.1.0) UNRELEASED; urgency=low
+js8py (0.1.0) buster focal; urgency=low
 
   * initial release
 
- -- Jakob Ketterl <jakob.ketterl@gmx.de>  Tue, 14 Apr 2020 20:46:00 +0000
+ -- Jakob Ketterl <jakob.ketterl@gmx.de>  Sun, 31 May 2020 13:40:00 +0000
