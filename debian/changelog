@@ -2,6 +2,12 @@ js8py (0.2.0) UNRELEASED; urgency=low
 
  -- Jakob Ketterl <jakob.ketterl@gmx.de>  Sun, 31 May 2020 13:52:00 +0000
 
+js8py (0.1.1) hirsute; urgency=low
+
+  * new build for Ubuntu Hirsute
+
+ -- Jakob Ketterl <jakob.ketterl@gmx.de>  Sun, 09 May 2021 22:59:00 +0000
+
 js8py (0.1.0) buster focal; urgency=low
 
   * initial release
