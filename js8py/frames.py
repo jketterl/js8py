@@ -56,8 +56,8 @@ class Js8FrameData(Js8Frame):
 class Js8FrameDirected(Js8Frame):
     def __init__(self, msg: Js8Message):
         super().__init__(msg)
-        self.callsign_from = self.unpackCallsign(msg.bits[3:31], msg.bits[64])
-        self.callsign_to = self.unpackCallsign(msg.bits[31:59], msg.bits[65])
+        self.source = {"callsign": self.unpackCallsign(msg.bits[3:31], msg.bits[64])}
+        self.destination = {"callsign": self.unpackCallsign(msg.bits[31:59], msg.bits[65])}
         cmd = self.bitsToInt(msg.bits[59:64])
         self.cmd = [c for c, v in directed_cmds.items() if v == cmd % 32][0]
 
@@ -116,7 +116,7 @@ class Js8FrameDirected(Js8Frame):
         return callsign
 
     def __str__(self):
-        result = "{0}: {1}{2} ".format(self.callsign_from, self.callsign_to, self.cmd)
+        result = "{0}: {1}{2} ".format(self.source["callsign"], self.destination["callsign"], self.cmd)
         if self.snr is not None:
             result += "{0:0=+3} ".format(self.snr)
         return result
@@ -126,7 +126,7 @@ class _Js8CompoundBase(Js8Frame):
     def __init__(self, msg: Js8Message):
         super().__init__(msg)
         packed_callsign = self.bitsToInt(msg.bits[3:53])
-        self.callsign = self._unpackAlphanumeric50(packed_callsign)
+        self.source = {"callsign": self._unpackAlphanumeric50(packed_callsign)}
 
     def _unpackAlphanumeric50(self, packed):
         word = [""] * 11
@@ -235,7 +235,7 @@ class Js8FrameCompound(_Js8CompoundBase):
                 self.snr = num - 31
 
     def __str__(self):
-        res = "{0}:".format(self.callsign)
+        res = "{0}:".format(self.source["callsign"])
         return res
 
 
@@ -248,12 +248,12 @@ class Js8FrameHeartbeat(_Js8CompoundBase):
         self.message = messages[message_type]
 
     def __str__(self):
-        return "{0}: {1} {2}".format(self.callsign, self.message, self.grid)
+        return "{0}: {1} {2}".format(self.source["callsign"], self.message, self.grid)
 
 
 class Js8FrameCompoundDirected(Js8FrameCompound):
     def __str__(self):
-        res = "{0}".format(self.callsign)
+        res = "{0}".format(self.source["callsign"])
         if self.grid:
             res += " {0}".format(self.grid)
         elif self.cmd and self.snr:
